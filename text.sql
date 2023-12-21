@@ -34,3 +34,34 @@ where c.name = 'Africa'
 select *
 from countries c 
 where date(national_day) = 'null';
+
+-- 6 Per ogni nazione, in ordine alfabetico, selezionare il nome, la regione e il continente
+
+select c.name, r.name, c2.name
+from countries c 
+join regions r on c.region_id = c.region_id 
+join continents c2 on r.continent_id = c2.continent_id 
+order by 'name' asc;
+
+-- 7 Selezionare le lingue ufficiali dell’Albania
+
+select *
+from languages l 
+join country_languages cl on l.language_id = cl.language_id 
+join countries c on cl.country_id = c.country_id 
+where `language` = official and c.name = 'Albania';
+
+-- 8 Selezionare il Gross domestic product (GDP) medio dello United Kingdom tra il 2000 e il 2010
+
+select avg(gdp) 
+from country_stats cs 
+join countries c on cs.country_id = c.country_id 
+where `year` >= 2000 and `year` <=2010;
+
+-- 9 Selezionare tutte le nazioni in cui si parla hindi, ordinate dalla più estesa alla meno estesa
+
+select *
+from countries c 
+join country_languages cl on c.country_id = cl.country_id 
+join languages l on cl.language_id = l.language_id 
+where `language` = 'hindi' and area asc ;
