@@ -33,7 +33,7 @@ where c.name = 'Africa'
 
 select *
 from countries c 
-where date(national_day) = 'null';
+where national_day is null;
 
 -- 6 Per ogni nazione, in ordine alfabetico, selezionare il nome, la regione e il continente
 
@@ -56,7 +56,7 @@ where `language` = official and c.name = 'Albania';
 select avg(gdp) 
 from country_stats cs 
 join countries c on cs.country_id = c.country_id 
-where `year` >= 2000 and `year` <=2010;
+where `year` >= 2000 and `year` <= 2010;
 
 -- 9 Selezionare tutte le nazioni in cui si parla hindi, ordinate dalla più estesa alla meno estesa
 
@@ -64,4 +64,42 @@ select *
 from countries c 
 join country_languages cl on c.country_id = cl.country_id 
 join languages l on cl.language_id = l.language_id 
-where `language` = 'hindi' and area asc ;
+where `language` = 'hindi' 
+order by area asc ;
+
+-- 10 Modificare la nazione di nome Italy, inserendo come national day il 2 giugno 1946
+
+update countries 
+set national_day = '1946-06-02'
+where country_id = 107;
+
+-- Query Bonus:
+
+-- 11 Selezionare le nazioni il cui national day è avvenuto prima del 1900, ordinate per national day dal più recente al meno recente
+
+select *
+from countries c 
+where year(national_day) < 1900
+order by national_day desc;
+
+-- 12 Contare quante lingue sono parlate in Italia
+
+select count(*)
+from languages l 
+join country_languages cl on l.language_id = cl.language_id 
+join countries c on cl.country_id = c.country_id 
+where c.name = 'Italy';
+
+-- 13 Per la regione Antarctica mostrare il valore dell’area totale e dell’area media delle nazioni
+
+select sum(area), avg(area)  
+from countries c 
+join regions r on c.region_id = r.region_id 
+where r.name = 'Antarctica';
+
+
+
+
+
+
+
