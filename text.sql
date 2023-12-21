@@ -49,7 +49,7 @@ select *
 from languages l 
 join country_languages cl on l.language_id = cl.language_id 
 join countries c on cl.country_id = c.country_id 
-where `language` = official and c.name = 'Albania';
+where cl.official = 1 and c.name = 'Albania';
 
 -- 8 Selezionare il Gross domestic product (GDP) medio dello United Kingdom tra il 2000 e il 2010
 
